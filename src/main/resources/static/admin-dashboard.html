@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogMyDay | Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-dashboard.css">
+    <script src="admin-dashboard.js" defer></script>
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">L</div>
+            <div>
+                <h2>LogMyDay</h2>
+                <span>ADMIN PORTAL</span>
+            </div>
+        </div>
+
+        <nav class="navigation">
+            <a href="#dashboard" class="nav-link active">Dashboard</a>
+            <a href="#employees" class="nav-link">Employees</a>
+            <a href="#attendance" class="nav-link">Attendance</a>
+            <a href="#attendanceRequests" class="nav-link">Attendance Requests</a>
+            <a href="#projects" class="nav-link">Work & Projects</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="admin-profile">
+                <div class="profile-avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <span>System Admin</span>
+                </div>
+            </div>
+            <button id="logoutBtn" class="logout-btn">Sign Out</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="breadcrumb">Pages / Dashboard</p>
+                <h1>Admin Dashboard</h1>
+            </div>
+            <div class="topbar-right">
+                <span id="currentDate"></span>
+                <div class="topbar-avatar">A</div>
+            </div>
+        </header>
+
+        <section id="dashboard" class="welcome-section">
+            <div>
+                <p>ADMINISTRATION OVERVIEW</p>
+                <h2>Welcome back, Administrator!</h2>
+                <span>Manage employees, monitor attendance and allocate projects.</span>
+            </div>
+            <div class="welcome-decoration">L</div>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon employees-icon">E</div>
+                <p>Total Employees</p>
+                <h2 id="totalEmployees">0</h2>
+                <span>Registered employees</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon present-icon">P</div>
+                <p>Present Today</p>
+                <h2 id="presentToday">0</h2>
+                <span>Checked in today</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon absent-icon">A</div>
+                <p>Absent Today</p>
+                <h2 id="absentToday">0</h2>
+                <span>Not checked in today</span>
+            </div>
+        </section>
+
+        <!-- Employee Management -->
+
+        <section id="employees" class="content-section">
+            <div class="section-heading">
+                <div>
+                    <p>TEAM MANAGEMENT</p>
+                    <h2>Employee Management</h2>
+                </div>
+                <button id="addEmployeeBtn" class="primary-btn" type="button">
+                    + Add Employee
+                </button>
+            </div>
+
+            <div class="filter-bar">
+                <input type="text" id="employeeSearch"
+                       placeholder="Search by Employee ID or Name">
+                <button id="searchEmployeeBtn" class="secondary-btn" type="button">
+                    Search
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Email</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="employeeTableBody">
+                    <tr>
+                        <td colspan="5">Loading employees...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Add Employee Popup -->
+
+        <div id="employeeModal" class="employee-modal" hidden>
+            <div class="employee-modal-content">
+
+                <div class="modal-heading">
+                    <div>
+                        <p>TEAM MANAGEMENT</p>
+                        <h2>Add New Employee</h2>
+                        <span>Enter the employee details below.</span>
+                    </div>
+
+                    <button type="button"
+                            id="closeEmployeeModalBtn"
+                            class="modal-close-btn"
+                            aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+
+                <form id="addEmployeeForm">
+
+                    <div class="form-group">
+                        <label for="newEmployeeId">Employee ID</label>
+                        <input type="number"
+                               id="newEmployeeId"
+                               name="employeeId"
+                               placeholder="Example: 1003"
+                               min="1"
+                               step="1"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newEmployeeName">Employee Name</label>
+                        <input type="text"
+                               id="newEmployeeName"
+                               name="employeeName"
+                               placeholder="Enter employee name"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newEmployeeEmail">Email Address</label>
+                        <input type="email"
+                               id="newEmployeeEmail"
+                               name="email"
+                               placeholder="Enter email address"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newEmployeePassword">Password</label>
+                        <input type="password"
+                               id="newEmployeePassword"
+                               name="password"
+                               placeholder="Create employee password"
+                               autocomplete="new-password"
+                               required>
+                    </div>
+
+                    <p id="employeeFormMessage" role="alert"></p>
+
+                    <div class="modal-actions">
+                        <button type="button"
+                                id="cancelEmployeeBtn"
+                                class="secondary-btn">
+                            Cancel
+                        </button>
+
+                        <button type="submit"
+                                id="saveEmployeeBtn"
+                                class="primary-btn">
+                            Save Employee
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- Update Employee Popup -->
+
+        <div id="updateEmployeeModal" class="employee-modal" hidden>
+            <div class="employee-modal-content">
+
+                <div class="modal-heading">
+                    <div>
+                        <p>TEAM MANAGEMENT</p>
+                        <h2>Update Employee</h2>
+                        <span>Update the employee's information below.</span>
+                    </div>
+
+                    <button type="button"
+                            id="closeUpdateEmployeeModalBtn"
+                            class="modal-close-btn"
+                            aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+
+                <form id="updateEmployeeForm">
+
+                    <div class="form-group">
+                        <label for="editEmployeeId">Employee ID</label>
+                        <input type="number"
+                               id="editEmployeeId"
+                               name="employeeId"
+                               readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editEmployeeName">Employee Name</label>
+                        <input type="text"
+                               id="editEmployeeName"
+                               name="employeeName"
+                               placeholder="Enter employee name"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editEmployeeEmail">Email Address</label>
+                        <input type="email"
+                               id="editEmployeeEmail"
+                               name="email"
+                               placeholder="Enter email address"
+                               required>
+                    </div>
+
+                    <p id="updateEmployeeFormMessage" role="alert"></p>
+
+                    <div class="modal-actions">
+                        <button type="button"
+                                id="cancelUpdateEmployeeBtn"
+                                class="secondary-btn">
+                            Cancel
+                        </button>
+
+                        <button type="submit"
+                                id="saveUpdateEmployeeBtn"
+                                class="primary-btn">
+                            Update Employee
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- Attendance Monitoring -->
+
+        <section id="attendance" class="content-section">
+            <div class="section-heading">
+                <div>
+                    <p>ATTENDANCE MONITORING</p>
+                    <h2>Attendance Records</h2>
+                </div>
+            </div>
+
+            <div class="filter-bar attendance-filters">
+                <input type="text" id="attendanceSearch"
+                       placeholder="Search by Employee ID or Name">
+                <input type="date" id="attendanceDate">
+                <button id="searchAttendanceBtn" class="secondary-btn" type="button">
+                    Filter
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Date</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody">
+                    <tr>
+                        <td colspan="6">Loading attendance records...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Attendance Request Management -->
+
+        <section id="attendanceRequests" class="content-section">
+
+            <div class="section-heading">
+                <div>
+                    <p>ATTENDANCE MANAGEMENT</p>
+                    <h2>Attendance Requests</h2>
+                    <span>Review employee requests for attendance corrections and removals.</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Request Date</th>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Attendance ID</th>
+                        <th>Attendance Date</th>
+                        <th>Request Type</th>
+                        <th>Reason</th>
+                        <th>Requested Check In</th>
+                        <th>Requested Check Out</th>
+                        <th>Status</th>
+                        <th>Admin Note</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="attendanceRequestsTableBody">
+                    <tr>
+                        <td colspan="12">Loading attendance requests...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- Work & Project Management -->
+
+        <section id="projects" class="content-section">
+
+            <div class="section-heading">
+                <div>
+                    <p>WORK ALLOCATION</p>
+                    <h2>Work & Project Management</h2>
+                </div>
+
+                <button id="addProjectBtn" class="primary-btn" type="button">
+                    + Create Project
+                </button>
+            </div>
+
+            <section class="stats-grid project-stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon employees-icon">T</div>
+                    <p>Total Projects</p>
+                    <h2 id="totalProjects">0</h2>
+                    <span>All projects</span>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon present-icon">A</div>
+                    <p>Assigned Projects</p>
+                    <h2 id="assignedProjects">0</h2>
+                    <span>Currently assigned</span>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon absent-icon">C</div>
+                    <p>Completed Projects</p>
+                    <h2 id="completedProjects">0</h2>
+                    <span>Successfully completed</span>
+                </div>
+
+            </section>
+
+            <div class="filter-bar">
+                <input type="text" id="projectSearch"
+                       placeholder="Search by project name or employee name">
+
+                <button id="searchProjectBtn" class="secondary-btn" type="button">
+                    Search
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Project ID</th>
+                        <th>Project Name</th>
+                        <th>Assigned Employee</th>
+                        <th>Start Date</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="projectTableBody">
+                    <tr>
+                        <td colspan="7">Loading projects...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- Create Project Popup -->
+
+        <div id="projectModal" class="employee-modal" hidden>
+            <div class="employee-modal-content">
+
+                <div class="modal-heading">
+                    <div>
+                        <p>WORK ALLOCATION</p>
+                        <h2 id="projectModalTitle">Create New Project</h2>
+                        <span>Enter the project details below.</span>
+                    </div>
+
+                    <button type="button"
+                            id="closeProjectModalBtn"
+                            class="modal-close-btn"
+                            aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+
+                <form id="projectForm">
+
+                    <div class="form-group">
+                        <label for="projectName">Project Name</label>
+                        <input type="text"
+                               id="projectName"
+                               name="projectName"
+                               placeholder="Enter project name"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectDescription">Description</label>
+                        <textarea id="projectDescription"
+                                  name="description"
+                                  placeholder="Enter project description"
+                                  rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectEmployee">Assign Employee</label>
+                        <select id="projectEmployee"
+                                name="employeeId"
+                                required>
+                            <option value="">Select an employee</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectStartDate">Start Date</label>
+                        <input type="date"
+                               id="projectStartDate"
+                               name="startDate"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectDueDate">Due Date</label>
+                        <input type="date"
+                               id="projectDueDate"
+                               name="dueDate"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectStatus">Project Status</label>
+                        <select id="projectStatus"
+                                name="status"
+                                required>
+                            <option value="ASSIGNED">Assigned</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="COMPLETED">Completed</option>
+                        </select>
+                    </div>
+
+                    <p id="projectFormMessage" role="alert"></p>
+
+                    <div class="modal-actions">
+                        <button type="button"
+                                id="cancelProjectBtn"
+                                class="secondary-btn">
+                            Cancel
+                        </button>
+
+                        <button type="submit"
+                                id="saveProjectBtn"
+                                class="primary-btn">
+                            Save Project
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <footer class="footer">
+            LogMyDay © 2026. Employee Attendance Management System.
+        </footer>
+
+    </main>
+</div>
+
+</body>
+</html>

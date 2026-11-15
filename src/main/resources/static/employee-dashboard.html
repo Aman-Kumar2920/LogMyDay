@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogMyDay | Employee Dashboard</title>
+    <link rel="stylesheet" href="employee-dashboard.css">
+    <script src="employee-dashboard.js" defer></script>
+</head>
+<body>
+
+<div class="dashboard-layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">L</div>
+            <span>LogMyDay</span>
+        </div>
+
+        <div class="menu-label">WORKSPACE</div>
+
+        <nav class="sidebar-menu">
+            <a href="#" class="menu-item active">
+                <span>▦</span> Dashboard
+            </a>
+            <a href="#attendance" class="menu-item">
+                <span>◷</span> My Attendance
+            </a>
+            <a href="#history" class="menu-item">
+                <span>▤</span> Attendance History
+            </a>
+            <a href="#attendanceRequests" class="menu-item">
+                <span>↻</span> My Requests
+            </a>
+            <a href="#projects" class="menu-item">
+                <span>▣</span> My Projects
+            </a>
+            <a href="#profile" class="menu-item">
+                <span>♙</span> My Profile
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <div class="help-icon">✦</div>
+                <strong>Need assistance?</strong>
+                <p>Contact your administrator for support.</p>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <span>↪</span> Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <div class="breadcrumb">Workspace / Dashboard</div>
+                <h2>Employee Dashboard</h2>
+            </div>
+
+            <div class="topbar-right">
+                <div class="date-display" id="todayDate"></div>
+                <div class="avatar" id="employeeAvatar">E</div>
+            </div>
+        </header>
+
+        <section class="welcome-section">
+            <div>
+                <span class="welcome-tag">EMPLOYEE PORTAL</span>
+                <h1>Welcome back, <span id="employeeName">Employee</span>! 👋</h1>
+                <p>Here's your attendance and work overview.</p>
+            </div>
+
+            <div class="welcome-decoration">L</div>
+        </section>
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Recorded Days (7d)</span>
+                    <div class="stat-icon blue">▦</div>
+                </div>
+                <h2 id="totalDays">--</h2>
+                <p>Attendance records in the last 7 days</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Present Days</span>
+                    <div class="stat-icon green">✓</div>
+                </div>
+                <h2 id="presentDays">--</h2>
+                <p>Days with attendance records</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Attendance Rate</span>
+                    <div class="stat-icon purple">%</div>
+                </div>
+                <h2 id="attendanceRate">--</h2>
+                <p>Based on recorded days</p>
+            </div>
+
+        </section>
+
+        <section class="attendance-section" id="attendance">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Today's Attendance</h2>
+                    <p>Record your check-in and check-out time.</p>
+                </div>
+
+                <span class="live-status">
+                    <span class="live-dot"></span> Live
+                </span>
+            </div>
+
+            <div class="attendance-card">
+
+                <div class="attendance-info">
+                    <span class="card-label">CURRENT TIME</span>
+                    <h2 id="liveClock">--:--:--</h2>
+                    <p id="attendanceDate"></p>
+                </div>
+
+                <div class="attendance-actions">
+                    <button class="checkin-btn" id="checkInBtn">
+                        ✓ Check In
+                    </button>
+
+                    <button class="checkout-btn" id="checkOutBtn">
+                        ↗ Check Out
+                    </button>
+                </div>
+
+                <div class="current-status">
+                    <span>Today's Status</span>
+                    <strong id="todayStatus">Not Checked In</strong>
+                </div>
+
+                <p id="attendanceMessage" class="attendance-message"></p>
+
+            </div>
+
+        </section>
+
+        <section class="history-section" id="history">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Recent Attendance</h2>
+                    <p>View your attendance activity for the last 7 days.</p>
+                </div>
+
+                <span class="history-tag">Last 7 Days</span>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>CHECK IN</th>
+                        <th>CHECK OUT</th>
+                        <th>STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="attendanceTable">
+                    <tr>
+                        <td colspan="5" class="empty-message">
+                            Loading attendance records...
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="attendance-note">
+                Need to correct an attendance record?
+                You can request an update or removal from the administrator.
+            </p>
+
+        </section>
+
+        <section class="history-section" id="attendanceRequests">
+
+            <div class="section-heading">
+                <div>
+                    <h2>My Attendance Requests</h2>
+                    <p>Track your attendance correction and removal requests.</p>
+                </div>
+
+                <span class="history-tag">Request History</span>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>REQUEST DATE</th>
+                        <th>ATTENDANCE ID</th>
+                        <th>REQUEST TYPE</th>
+                        <th>REASON</th>
+                        <th>STATUS</th>
+                        <th>ADMIN NOTE</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="attendanceRequestsTable">
+                    <tr>
+                        <td colspan="6" class="empty-message">
+                            Loading attendance requests...
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <section class="projects-section" id="projects">
+
+            <div class="section-heading">
+                <div>
+                    <h2>My Projects</h2>
+                    <p>View the projects assigned to you by the administrator.</p>
+                </div>
+
+                <span class="history-tag">My Work</span>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>PROJECT NAME</th>
+                        <th>DESCRIPTION</th>
+                        <th>START DATE</th>
+                        <th>DUE DATE</th>
+                        <th>STATUS</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="employeeProjectsTable">
+                    <tr>
+                        <td colspan="5" class="empty-message">
+                            Loading your projects...
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <section class="profile-section" id="profile">
+
+            <div class="section-heading">
+                <div>
+                    <h2>My Profile</h2>
+                    <p>Your registered employee information.</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-avatar" id="profileAvatar">E</div>
+
+                <div class="profile-details">
+                    <h3 id="profileName">Employee</h3>
+                    <p>Employee ID: <strong id="profileId">--</strong></p>
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="dashboard-footer">
+            © 2026 LogMyDay. All rights reserved.
+            <span>Made for smarter workdays.</span>
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>

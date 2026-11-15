@@ -1,0 +1,714 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --navy: #142849;
+    --blue: #347fe9;
+    --light-blue: #edf4ff;
+    --text: #1c2940;
+    --muted: #8793a6;
+    --border: #edf0f5;
+    --background: #f6f8fc;
+    --green: #16a36a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.dashboard-layout {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 255px;
+    background: var(--navy);
+    color: white;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    padding: 0 5px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #62b3ff, #3475e9);
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+    box-shadow: 0 6px 20px rgba(52, 127, 233, 0.3);
+}
+
+.menu-label {
+    color: #8193b0;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    margin: 52px 10px 17px;
+}
+
+.sidebar-menu {
+    display: grid;
+    gap: 9px;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #b9c7da;
+    padding: 14px 13px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.menu-item span {
+    font-size: 19px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    color: white;
+    background: rgba(74, 139, 235, 0.22);
+}
+
+.menu-item.active {
+    border-left: 3px solid #65b4ff;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.help-card {
+    padding: 17px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    margin-bottom: 20px;
+}
+
+.help-icon {
+    color: #70b6ff;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.help-card strong {
+    font-size: 12px;
+}
+
+.help-card p {
+    color: #9eb0c9;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-top: 7px;
+}
+
+.logout-btn {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.13);
+    background: transparent;
+    color: #d4dfef;
+    border-radius: 9px;
+    padding: 13px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    transition: 0.25s;
+}
+
+.logout-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.logout-btn span {
+    margin-right: 10px;
+    font-size: 17px;
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+    margin-left: 255px;
+    width: calc(100% - 255px);
+    padding: 32px 4.5%;
+    max-width: 1700px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border);
+}
+
+.breadcrumb {
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 7px;
+}
+
+.topbar h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 21px;
+    letter-spacing: -0.5px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.date-display {
+    color: #65738a;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.avatar,
+.profile-avatar {
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #e5efff;
+    color: #347fe9;
+    font-weight: 800;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+}
+
+/* WELCOME */
+
+.welcome-section {
+    margin-top: 30px;
+    padding: 34px 38px;
+    border-radius: 17px;
+    background: linear-gradient(110deg, #eaf2ff, #f2f6ff);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-tag {
+    color: #347fe9;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
+
+.welcome-section h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(22px, 2.5vw, 30px);
+    letter-spacing: -1px;
+    margin: 13px 0 9px;
+}
+
+.welcome-section h1 span {
+    color: #347fe9;
+}
+
+.welcome-section p {
+    color: #75839a;
+    font-size: 13px;
+}
+
+.welcome-decoration {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 170px;
+    line-height: 1;
+    font-weight: 800;
+    color: rgba(52, 127, 233, 0.08);
+    position: absolute;
+    right: 55px;
+    top: -30px;
+}
+
+/* STATISTICS */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 19px;
+    margin-top: 25px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 23px;
+    box-shadow: 0 4px 18px rgba(34, 54, 86, 0.025);
+    transition: 0.25s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(34, 54, 86, 0.07);
+}
+
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #8290a5;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stat-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.stat-icon.blue {
+    color: #347fe9;
+    background: #edf4ff;
+}
+
+.stat-icon.green {
+    color: #16a36a;
+    background: #eaf8f1;
+}
+
+.stat-icon.purple {
+    color: #9160df;
+    background: #f4efff;
+}
+
+.stat-card h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 30px;
+    margin: 18px 0 5px;
+}
+
+.stat-card p {
+    color: #9aa5b5;
+    font-size: 11px;
+}
+
+/* SECTIONS */
+
+.attendance-section,
+.history-section,
+.profile-section {
+    margin-top: 38px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 17px;
+}
+
+.section-heading h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px;
+    letter-spacing: -0.4px;
+}
+
+.section-heading p {
+    color: #8a96a8;
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.live-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #16a36a;
+    background: #eaf8f1;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    background: #16a36a;
+    border-radius: 50%;
+}
+
+/* ATTENDANCE CARD */
+
+.attendance-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 18px rgba(34, 54, 86, 0.025);
+}
+
+.card-label {
+    color: #8a96a8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.attendance-info h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 35px;
+    letter-spacing: -1px;
+    margin: 8px 0;
+}
+
+.attendance-info p {
+    color: #8995a6;
+    font-size: 11px;
+}
+
+.attendance-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.checkin-btn,
+.checkout-btn {
+    border: none;
+    border-radius: 9px;
+    padding: 14px 21px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.25s;
+}
+
+.checkin-btn {
+    color: white;
+    background: linear-gradient(110deg, #347fe9, #2464ce);
+    box-shadow: 0 5px 15px rgba(52, 127, 233, 0.2);
+}
+
+.checkout-btn {
+    color: #347fe9;
+    background: #edf4ff;
+}
+
+.checkin-btn:hover,
+.checkout-btn:hover {
+    transform: translateY(-2px);
+}
+
+.checkin-btn:disabled,
+.checkout-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.current-status {
+    width: 100%;
+    border-top: 1px solid var(--border);
+    padding-top: 17px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.current-status span {
+    color: #8a96a8;
+}
+
+.current-status strong {
+    color: #d18b24;
+}
+
+.attendance-message {
+    width: 100%;
+    min-height: 15px;
+    font-size: 12px;
+    color: #347fe9;
+}
+
+/* HISTORY TABLE */
+
+.history-tag {
+    background: #edf4ff;
+    color: #347fe9;
+    border-radius: 20px;
+    padding: 8px 13px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.table-container {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow-x: auto;
+    box-shadow: 0 4px 18px rgba(34, 54, 86, 0.025);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+thead {
+    background: #f8faff;
+}
+
+th {
+    text-align: left;
+    padding: 17px 20px;
+    color: #8a96a8;
+    font-size: 10px;
+    letter-spacing: 0.8px;
+    font-weight: 800;
+}
+
+td {
+    padding: 18px 20px;
+    border-top: 1px solid #f0f2f6;
+    color: #536177;
+    font-size: 12px;
+}
+
+.empty-message {
+    text-align: center;
+    color: #9aa5b5;
+    padding: 30px;
+}
+
+/* ACTION COLUMN */
+
+th:last-child,
+td:last-child {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* ATTENDANCE CORRECTION NOTE */
+
+.attendance-note {
+    margin-top: 14px;
+    padding: 14px 17px;
+    background: #edf4ff;
+    border-left: 3px solid #347fe9;
+    border-radius: 7px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* PROFILE */
+
+.profile-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 23px;
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.profile-avatar {
+    width: 55px;
+    height: 55px;
+    font-size: 21px;
+}
+
+.profile-details h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+}
+
+.profile-details p {
+    margin-top: 7px;
+    color: #8a96a8;
+    font-size: 11px;
+}
+
+/* FOOTER */
+
+.dashboard-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 45px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    color: #9aa5b5;
+    font-size: 10px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        width: calc(100% - 220px);
+        padding: 28px 3%;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .dashboard-layout {
+        display: block;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        padding: 17px;
+    }
+
+    .brand {
+        font-size: 20px;
+    }
+
+    .menu-label,
+    .sidebar-bottom,
+    .help-card {
+        display: none;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        overflow-x: auto;
+        margin-top: 18px;
+    }
+
+    .menu-item {
+        white-space: nowrap;
+        padding: 10px;
+        font-size: 11px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 23px 17px;
+    }
+
+    .topbar h2 {
+        font-size: 17px;
+    }
+
+    .date-display {
+        display: none;
+    }
+
+    .welcome-section {
+        padding: 27px 21px;
+    }
+
+    .welcome-decoration {
+        right: 10px;
+        font-size: 110px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 19px;
+    }
+
+    .attendance-card {
+        padding: 21px;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .attendance-actions {
+        width: 100%;
+    }
+
+    .checkin-btn,
+    .checkout-btn {
+        flex: 1;
+    }
+
+    .dashboard-footer {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 400px) {
+    .section-heading h2 {
+        font-size: 15px;
+    }
+
+    .attendance-actions {
+        flex-direction: column;
+    }
+
+    .checkin-btn,
+    .checkout-btn {
+        width: 100%;
+    }
+}
